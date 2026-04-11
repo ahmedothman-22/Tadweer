@@ -61,7 +61,7 @@ class AppTextFormField extends StatelessWidget {
             ),
           )
         : OutlineInputBorder(
-            borderRadius: BorderRadius.circular(12.r),
+            borderRadius: BorderRadius.circular(8.r),
             borderSide: BorderSide(
               color: isBorder ? DarkAppColors.grey400 : Colors.transparent,
               width: 1.w,
@@ -101,7 +101,7 @@ class AppTextFormField extends StatelessWidget {
                     border.copyWith(
                       borderSide: BorderSide(
                         color: isBorder
-                            ? DarkAppColors.primary600
+                            ? DarkAppColors.primary800
                             : Colors.transparent,
                         width: 1.5.w,
                       ),
@@ -132,7 +132,7 @@ class AppTextFormField extends StatelessWidget {
                     ),
                 suffixIcon: suffixIcon,
                 prefixIcon: prefixIcon,
-                fillColor: backgroundColor ?? Colors.white,
+                fillColor: backgroundColor ?? DarkAppColors.grey800,
                 filled: true,
               ),
               style:
