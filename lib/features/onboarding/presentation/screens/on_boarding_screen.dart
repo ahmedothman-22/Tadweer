@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
+import 'package:tadweer/core/helpers/shared_pref_helper.dart';
 import 'package:tadweer/core/routing/routes.dart';
 import 'package:tadweer/core/theme/app_texts/app_text_styles.dart';
+import 'package:tadweer/core/utils/shared_pref_keys.dart';
 import 'package:tadweer/core/widgets/custom_button.dart';
+import 'package:tadweer/features/onboarding/presentation/widgets/custom_page_Indicator.dart';
 
 class OnBoardingScreen extends StatefulWidget {
   const OnBoardingScreen({super.key});
@@ -25,7 +28,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
     {
       "image": "assets/images/onboard2.png",
       "title": "Create daily routine",
-      "desc": "Plan your day and stay organized",
+      "desc": "Plan your day and stay organized بسهولة",
     },
     {
       "image": "assets/images/onboard3.png",
@@ -36,6 +39,10 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
 
   void nextPage() {
     if (currentIndex == pages.length - 1) {
+      SharedPrefHelper.setData(
+        key: SharedPrefKeys.kIsOnBoardingSeen,
+        value: true,
+      );
       GoRouter.of(context).pushReplacement(Routes.loginView);
     } else {
       _controller.nextPage(
@@ -45,7 +52,12 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
     }
   }
 
-  void skip() {
+  void skip() async {
+    await SharedPrefHelper.setData(
+      key: SharedPrefKeys.kIsOnBoardingSeen,
+      value: true,
+    );
+    if (!mounted) return;
     GoRouter.of(context).pushReplacement(Routes.loginView);
   }
 
@@ -74,7 +86,6 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                 },
                 itemBuilder: (context, index) {
                   final page = pages[index];
-
                   return Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -103,6 +114,10 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
 
             const Spacer(),
 
+            PageIndicator(currentIndex: currentIndex, totalPages: pages.length),
+
+            const Spacer(),
+
             /// 🔹 Buttons
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -116,7 +131,6 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                 CustomButton(
                   width: 90.w,
                   text: currentIndex == pages.length - 1 ? "Done" : "Next",
-                  color: theme.colorScheme.primary,
                   onTap: nextPage,
                 ),
               ],
