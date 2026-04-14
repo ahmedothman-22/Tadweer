@@ -4,6 +4,9 @@ import 'package:tadweer/features/auth/presentation/screens/email_verified_screen
 import 'package:tadweer/features/auth/presentation/screens/forget_password_screen.dart';
 import 'package:tadweer/features/auth/presentation/screens/login_screen.dart';
 import 'package:tadweer/features/auth/presentation/screens/sign_up_screen.dart';
+import 'package:tadweer/features/home/models/task_model.dart';
+import 'package:tadweer/features/home/presentation/views/home_view.dart';
+import 'package:tadweer/features/home/presentation/views/edit_task_view.dart';
 import 'package:tadweer/features/onboarding/presentation/screens/on_boarding_screen.dart';
 import 'package:tadweer/features/onboarding/presentation/screens/splash_screen.dart';
 
@@ -37,6 +40,20 @@ abstract class AppRouter {
         GoRoute(
           path: Routes.emailVerifiedView,
           builder: (context, state) => const EmailVerifiedScreen(),
+        ),
+        GoRoute(
+          path: Routes.homeview,
+          builder: (context, state) => const HomeView(),
+        ),
+        GoRoute(
+          path: Routes.taskediting,
+          builder: (context, state) {
+            final task = state.extra as TaskModel?;
+            if (task == null) {
+              return const HomeView();
+            }
+            return EditTaskScreen(task: task);
+          },
         ),
       ],
     );

@@ -130,7 +130,9 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 CustomButton(
                   onTap: () async {
-                    if (_formkey.currentState!.validate()) {}
+                    if (_formkey.currentState!.validate()) {
+                      GoRouter.of(context).pushReplacement(Routes.homeview);
+                    }
                   },
                   text: 'Login',
                 ),
